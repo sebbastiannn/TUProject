@@ -1,0 +1,2 @@
+ContentWidget { background: transparent; }
+ContentWidget QLabel { color: #e0e0e0;  }
