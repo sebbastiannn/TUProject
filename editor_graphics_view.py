@@ -116,6 +116,16 @@ class GraphicsView(QGraphicsView):
     "RIGHT MOUSE BUTTON EVENT"
     def rightMouseButtonPress(self, event):
         super().mousePressEvent(event)
+        item = self.getItemAtClick(event)
+        if isinstance(item, GraphicsEdge): print('RMB:', item.edge, ' connecting sockets:',
+                                                        item.edge.start_socket, '<-->', item.edge.end_socket)
+        if type(item) is GraphicsSocket: print('RMB:', item.socket, 'has edge:', item.socket.edge)
+        if item is None:
+            print('SCENE:')
+            print('  Boxes:')
+            for box in self.grScene.scene.boxes: print('    ', box)
+            print('  Edges:')
+            for edge in self.grScene.scene.edges: print('    ', edge)
 
     def rightMouseButtonRelease(self, event):
         super().mouseReleaseEvent(event)
