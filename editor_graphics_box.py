@@ -38,7 +38,11 @@ class GraphicsBox(QGraphicsItem):
     "update the edges"
     def mouseMoveEvent(self, event):
         super().mouseMoveEvent(event)
-        self.box.updateConnectedEdges()
+        # optimize me! just update the selected nodes
+        for box in self.scene().scene.boxes:
+            if box.grBox.isSelected():
+                box.updateConnectedEdges()
+
 
     @property
     def title(self): return self._title

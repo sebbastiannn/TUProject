@@ -11,7 +11,7 @@ class Box():
         self.content = ContentWidget()
         self.grBox = GraphicsBox(self)
 
-        self.scene.addNode(self)
+        self.scene.addBox(self)
         self.scene.grScene.addItem(self.grBox)
 
         self.socket_spacing = 22
