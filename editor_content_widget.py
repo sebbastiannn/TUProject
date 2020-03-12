@@ -2,7 +2,11 @@ from PyQt5.QtWidgets import *
 
 " Wird dann später mit einem Icon gefüllt"
 class ContentWidget(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, box, parent=None):
+        # important to add because there will be a bug
+        # when deleting the box
+        # but not this widget
+        self.box = box
         super().__init__(parent)
 
         self.initUI()
@@ -15,3 +19,6 @@ class ContentWidget(QWidget):
         self.wdg_label = QLabel("Some Title")
         self.layout.addWidget(self.wdg_label)
         self.layout.addWidget(QTextEdit("foo"))
+
+
+

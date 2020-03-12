@@ -34,7 +34,6 @@ class Scene():
     def addEdge(self, edge):
         self.edges.append(edge)
 
-
     def removeBox(self, box):
         self.boxes.remove(box)
 

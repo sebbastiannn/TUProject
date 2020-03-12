@@ -8,7 +8,7 @@ class Box():
 
         self.title = title
 
-        self.content = ContentWidget()
+        self.content = ContentWidget(self)
         self.grBox = GraphicsBox(self)
 
         self.scene.addBox(self)
@@ -64,3 +64,18 @@ class Box():
         for socket in self.inputs + self.outputs:
             if socket.hasEdge():
                 socket.edge.updatePositions()
+
+    def remove(self):
+        # Removing Node + remove all edges from sockets
+        for socket in (self.inputs+self.outputs):
+            if socket.hasEdge():
+                # when the socket is conected to edge deleted it
+                socket.edge.remove()
+        # remove grNode
+        self.scene.grScene.removeItem(self.grBox)
+        self.grBox = None
+        # remove node from the scene
+        self.scene.removeBox(self)
+        # everything was done
+
+

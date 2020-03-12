@@ -10,7 +10,7 @@ MODE_EDGE_DRAG = 2
 
 EDGE_DRAG_START_THRESHOLD = 10
 
-
+DEBUG = True
 
 class GraphicsView(QGraphicsView):
     def __init__(self, grScene, parent=None):
@@ -117,14 +117,6 @@ class GraphicsView(QGraphicsView):
     def rightMouseButtonPress(self, event):
         super().mousePressEvent(event)
 
-        item = self.getItemAtClick(event)
-        if item is None:
-            print('SCENE:')
-            print('  Nodes:')
-            for node in self.grScene.scene.nodes: print('    ', node)
-            print('  Edges:')
-            for edge in self.grScene.scene.edges: print('    ', edge)
-
     def rightMouseButtonRelease(self, event):
         super().mouseReleaseEvent(event)
 
@@ -135,6 +127,23 @@ class GraphicsView(QGraphicsView):
             self.dragEdge.grEdge.update()
 
         super().mouseMoveEvent(event)
+
+    "Press event for delete"
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key_Delete:
+            self.deleteSelected()
+        else:
+            super().keyPressEvent(event)
+
+    "deleting selected item"
+    def deleteSelected(self):
+        for item in self.grScene.selectedItems():
+            if isinstance(item, GraphicsEdge):
+                item.edge.remove()
+            elif hasattr(item, 'box'):
+                item.box.remove()
+
+
 
     def getItemAtClick(self, event):
         """ return the object on which we've clicked/release mouse button """

@@ -54,10 +54,18 @@ class Edge:
         self.start_socket = None
 
     def remove(self):
+        "Removing Edge + remove edge from all sockets"
         self.remove_from_sockets()
+        # remove grEdge
         self.scene.grScene.removeItem(self.grEdge)
         self.grEdge = None
-        self.scene.removeEdge(self)
+        # remove edge from scene
+        try:
+            self.scene.removeEdge(self)
+        except ValueError:
+            pass
+
+
 
 
 "Graphic from the edge"
