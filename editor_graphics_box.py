@@ -63,6 +63,7 @@ class GraphicsBox(QGraphicsItem):
 
     def initTitle(self):
         self.title_item = QGraphicsTextItem(self)
+        self.title_item.box = self.box
         self.title_item.setDefaultTextColor(self._title_color)
         self.title_item.setFont(self._title_font)
         self.title_item.setTextWidth(self.title_item.textWidth())               # bessere Option finden!!!!
