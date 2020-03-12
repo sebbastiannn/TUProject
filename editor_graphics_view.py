@@ -40,6 +40,7 @@ class GraphicsView(QGraphicsView):
         self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         "For scrolling"
         self.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
+        self.setDragMode(QGraphicsView.RubberBandDrag)
 
     "what happen when we press mouse button"
     def mousePressEvent(self, event):
@@ -151,18 +152,16 @@ class GraphicsView(QGraphicsView):
         """ return True if skip the rest of the code """
         self.mode = MODE_NOOP
         if type(item) is GraphicsSocket:
-            if item.socket.hasEdge():
-                item.socket.edge.remove()
-            "remove previous Edge"
-            if self.previousEdge is not None: self.previousEdge.remove()
-
-            self.dragEdge.start_socket = self.last_start_socket
-            self.dragEdge.end_socket = item.socket
-            self.dragEdge.start_socket.setConnectedEdge(self.dragEdge)
-            self.dragEdge.end_socket.setConnectedEdge(self.dragEdge)
-
-            self.dragEdge.updatePositions()
-            return True
+            if item.socket != self.last_start_socket:
+                if item.socket.hasEdge():
+                    item.socket.edge.remove()
+                if self.previousEdge is not None: self.previousEdge.remove()
+                self.dragEdge.start_socket = self.last_start_socket
+                self.dragEdge.end_socket = item.socket
+                self.dragEdge.start_socket.setConnectedEdge(self.dragEdge)
+                self.dragEdge.end_socket.setConnectedEdge(self.dragEdge)
+                self.dragEdge.updatePositions()
+                return True
 
         self.dragEdge.remove()
         self.dragEdge = None
