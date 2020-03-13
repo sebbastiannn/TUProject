@@ -17,6 +17,9 @@ import json
 from collections import OrderedDict
 from editor_class_collection import Serializable
 from editor_graphics_scene import GraphicsScene
+from editor_box import Box
+from editor_edge import Edge
+
 
 "Content from Scene"
 class Scene(Serializable):
@@ -47,6 +50,10 @@ class Scene(Serializable):
     def removeEdge(self, edge):
         self.edges.remove(edge)
 
+    def clear(self):
+        while len(self.boxes) > 0:
+            self.boxes[0].remove()
+
     def saveToFile(self, filename):
         with open(filename, "w") as file:
             file.write(json.dumps(self.serialize(), indent=4))
@@ -72,6 +79,18 @@ class Scene(Serializable):
 
     def deserialize(self, data, hashmap={}):
         print("deserializating data", data)
-        return False
+        self.clear()
+        hashmap = {}
+
+        # create nodes
+        for box_data in data['boxes']:
+            Box(self).deserialize(box_data, hashmap)
+
+        # create edges
+        for edge_data in data['edges']:
+            Edge(self).deserialize(edge_data, hashmap)
+
+        return True
+
 
 

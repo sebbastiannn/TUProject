@@ -42,9 +42,9 @@ class EditorMainWindow(QWidget):
         box1 = Box(self.scene, "Box 1", inputs=[0, 0, 0], outputs=[1])
         box2 = Box(self.scene, "Box 2", inputs=[3, 3, 3], outputs=[1])
         box3 = Box(self.scene, "Box 3", inputs=[2, 2, 2], outputs=[1])
-        box1.setBoxPos(-350, -250)
-        box2.setBoxPos(-75, 0)
-        box3.setBoxPos(200, -150)
+        box1.setPos(-350, -250)
+        box2.setPos(-75, 0)
+        box3.setPos(200, -150)
 
         edge1 = Edge(self.scene, box1.outputs[0], box2.inputs[0], edge_type=EDGE_TYPE_BEZIER)
         edge2 = Edge(self.scene, box2.outputs[0], box3.inputs[0], edge_type=EDGE_TYPE_BEZIER)
