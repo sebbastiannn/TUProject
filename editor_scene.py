@@ -15,7 +15,7 @@ from PyQt5.QtGui import *
 "or even custom items, on a 2D surface. QGraphicsScene is part of the Graphics View Framework"
 import json
 from collections import OrderedDict
-from editor_class_collection import Serializable, SceneHistory
+from editor_class_collection import Serializable, SceneHistory, SceneClipboard
 from editor_graphics_scene import GraphicsScene
 from editor_box import Box
 from editor_edge import Edge
@@ -34,6 +34,7 @@ class Scene(Serializable):
 
         self.initUI()
         self.history = SceneHistory(self)
+        self.clipboard = SceneClipboard(self)
 
     def initUI(self):
         self.grScene = GraphicsScene(self)
@@ -78,18 +79,19 @@ class Scene(Serializable):
             ('edges', edges),
         ])
 
-    def deserialize(self, data, hashmap={}):
-        print("deserializating data", data)
+    def deserialize(self, data, hashmap={}, restore_id=True):
         self.clear()
         hashmap = {}
 
+        if restore_id: self.id = data['id']
+
         # create nodes
         for box_data in data['boxes']:
-            Box(self).deserialize(box_data, hashmap)
+            Box(self).deserialize(box_data, hashmap, restore_id)
 
         # create edges
         for edge_data in data['edges']:
-            Edge(self).deserialize(edge_data, hashmap)
+            Edge(self).deserialize(edge_data, hashmap, restore_id)
 
         return True
 

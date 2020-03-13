@@ -8,7 +8,7 @@ from editor_edge import *
 from editor_graphics_view import GraphicsView
 
 
-class EditorMainWindow(QWidget):
+class EditorMainWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
@@ -19,7 +19,6 @@ class EditorMainWindow(QWidget):
 
 
     def initUI(self):
-        self.setGeometry(200, 200, 800, 600)
 
         self.layout = QVBoxLayout()
         self.layout.setContentsMargins(0, 0, 0, 0)
@@ -33,10 +32,6 @@ class EditorMainWindow(QWidget):
         # create graphics view
         self.view = GraphicsView(self.scene.grScene, self)
         self.layout.addWidget(self.view)
-
-
-        self.setWindowTitle("Editor")
-        self.show()
 
     def addBoxes(self):
         box1 = Box(self.scene, "Box 1", inputs=[0, 0, 0], outputs=[1])

@@ -13,6 +13,8 @@ EDGE_DRAG_START_THRESHOLD = 10
 DEBUG = True
 
 class GraphicsView(QGraphicsView):
+    #scenePosChanged = pyqtSignal(int, int)
+
     def __init__(self, grScene, parent=None):
         super().__init__(parent)
         self.grScene = grScene
@@ -139,33 +141,39 @@ class GraphicsView(QGraphicsView):
             self.dragEdge.grEdge.setDestination(pos.x(), pos.y())
             self.dragEdge.grEdge.update()
 
+        #self.last_scene_mouse_position = self.mapToScene(event.pos())
+
+        #self.scenePosChanged.emit(
+            #int(self.last_scene_mouse_position.x()), int(self.last_scene_mouse_position.y())
+        #)
+
         super().mouseMoveEvent(event)
 
     "Press event for delete"
     def keyPressEvent(self, event):
-        if event.key() == Qt.Key_Delete:
-            self.deleteSelected()
+        #if event.key() == Qt.Key_Delete:
+            #self.deleteSelected()
         # S for Save
-        elif event.key() == Qt.Key_S and event.modifiers() & Qt.ControlModifier:
-            self.grScene.scene.saveToFile("graph.json.txt")
+        #elif event.key() == Qt.Key_S and event.modifiers() & Qt.ControlModifier:
+            #self.grScene.scene.saveToFile("graph.json.txt")
         # L for Load
-        elif event.key() == Qt.Key_L and event.modifiers() & Qt.ControlModifier:
-            self.grScene.scene.loadFromFile("graph.json.txt")
+        #elif event.key() == Qt.Key_L and event.modifiers() & Qt.ControlModifier:
+            #self.grScene.scene.loadFromFile("graph.json.txt")
 
-        elif event.key() == Qt.Key_Z and event.modifiers() & Qt.ControlModifier and not event.modifiers() & Qt.ShiftModifier:
-            self.grScene.scene.history.undo()
+        #elif event.key() == Qt.Key_Z and event.modifiers() & Qt.ControlModifier and not event.modifiers() & Qt.ShiftModifier:
+            #self.grScene.scene.history.undo()
 
-        elif event.key() == Qt.Key_Z and event.modifiers() & Qt.ControlModifier and event.modifiers() & Qt.ShiftModifier:
-            self.grScene.scene.history.redo()
+        #elif event.key() == Qt.Key_Z and event.modifiers() & Qt.ControlModifier and event.modifiers() & Qt.ShiftModifier:
+            #self.grScene.scene.history.redo()
 
-        elif event.key() == Qt.Key_H:
-            print("HISTORY:     len(%d)" % len(self.grScene.scene.history.history_stack),
-                  " -- current_step", self.grScene.scene.history.history_current_step)
-            ix = 0
-            for item in self.grScene.scene.history.history_stack:
-                print("#", ix, "--", item['desc'])
-                ix += 1
-        else:
+        #elif event.key() == Qt.Key_H:
+            #print("HISTORY:     len(%d)" % len(self.grScene.scene.history.history_stack),
+                  #" -- current_step", self.grScene.scene.history.history_current_step)
+            #ix = 0
+            #for item in self.grScene.scene.history.history_stack:
+                #print("#", ix, "--", item['desc'])
+                #ix += 1
+        #else:
             super().keyPressEvent(event)
 
     "deleting selected item"

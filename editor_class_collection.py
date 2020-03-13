@@ -11,6 +11,17 @@ class Serializable():
     def deserialize(self, data, hashmap={}):
         raise NotImplemented()
 
+class SceneClipboard():
+    def __init__(self, scene):
+        self.scene = scene
+
+    def serializeSelected(self, delete=False):
+        return {}
+
+    def deserializeFromClipboard(self, data):
+        print("deserializating from clipboard, data:", data)
+
+
 "The Scene History"
 from editor_edge import GraphicsEdge
 
