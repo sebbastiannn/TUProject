@@ -15,7 +15,7 @@ from PyQt5.QtGui import *
 "or even custom items, on a 2D surface. QGraphicsScene is part of the Graphics View Framework"
 import json
 from collections import OrderedDict
-from editor_class_collection import Serializable
+from editor_class_collection import Serializable, SceneHistory
 from editor_graphics_scene import GraphicsScene
 from editor_box import Box
 from editor_edge import Edge
@@ -33,6 +33,7 @@ class Scene(Serializable):
         self.scene_height = 64000
 
         self.initUI()
+        self.history = SceneHistory(self)
 
     def initUI(self):
         self.grScene = GraphicsScene(self)
