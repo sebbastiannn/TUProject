@@ -75,7 +75,7 @@ class EditorWindow(QMainWindow):
     def onFileSave(self):
         if self.filename is None: return self.onFileSaveAs()
         self.centralWidget().scene.saveToFile(self.filename)
-        self.statusBar().showMessage("Successfully saved %s" % self.filename)
+        #self.statusBar().showMessage("Successfully saved %s" % self.filename)
 
     def onFileSaveAs(self):
         fname, filter = QFileDialog.getSaveFileName(self, 'Save graph to file')
@@ -111,9 +111,8 @@ class EditorWindow(QMainWindow):
         except ValueError as e:
             print("Pasting of not valid json data!", e)
             return
-
         # check if the json data are correct
-        if 'nodes' not in data:
+        if 'boxes' not in data:
             print("JSON does not contain any boxes!")
             return
 
