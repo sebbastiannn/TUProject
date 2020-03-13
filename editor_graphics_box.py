@@ -35,6 +35,8 @@ class GraphicsBox(QGraphicsItem):
         self.initContent()
 
         self.initUI()
+        self.wasMoved = False
+
     "update the edges"
     def mouseMoveEvent(self, event):
         super().mouseMoveEvent(event)
@@ -42,7 +44,14 @@ class GraphicsBox(QGraphicsItem):
         for box in self.scene().scene.boxes:
             if box.grBox.isSelected():
                 box.updateConnectedEdges()
+        self.wasMoved = True
 
+    def mouseReleaseEvent(self, event):
+        super().mouseReleaseEvent(event)
+
+        if self.wasMoved:
+            self.wasMoved = False
+            self.box.scene.history.storeHistory("Box moved")
 
     @property
     def title(self): return self._title

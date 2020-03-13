@@ -111,6 +111,9 @@ class GraphicsView(QGraphicsView):
                 res = self.edgeDragEnd(item)
                 if res: return
 
+        if self.dragMode() == QGraphicsView.RubberBandDrag:
+            self.grScene.scene.history.storeHistory("Selection changed")
+
         super().mouseReleaseEvent(event)
 
     "RIGHT MOUSE BUTTON EVENT"
@@ -148,20 +151,20 @@ class GraphicsView(QGraphicsView):
         # L for Load
         elif event.key() == Qt.Key_L and event.modifiers() & Qt.ControlModifier:
             self.grScene.scene.loadFromFile("graph.json.txt")
-        elif event.key() == Qt.Key_1:
-            self.grScene.scene.history.storeHistory("Item A")
-        elif event.key() == Qt.Key_2:
-            self.grScene.scene.history.storeHistory("Item B")
-        elif event.key() == Qt.Key_3:
-            self.grScene.scene.history.storeHistory("Item C")
-        elif event.key() == Qt.Key_4:
+
+        elif event.key() == Qt.Key_Z and event.modifiers() & Qt.ControlModifier and not event.modifiers() & Qt.ShiftModifier:
             self.grScene.scene.history.undo()
-        elif event.key() == Qt.Key_5:
+
+        elif event.key() == Qt.Key_Z and event.modifiers() & Qt.ControlModifier and event.modifiers() & Qt.ShiftModifier:
             self.grScene.scene.history.redo()
+
         elif event.key() == Qt.Key_H:
             print("HISTORY:     len(%d)" % len(self.grScene.scene.history.history_stack),
                   " -- current_step", self.grScene.scene.history.history_current_step)
-            print(self.grScene.scene.history.history_stack)
+            ix = 0
+            for item in self.grScene.scene.history.history_stack:
+                print("#", ix, "--", item['desc'])
+                ix += 1
         else:
             super().keyPressEvent(event)
 
@@ -172,8 +175,8 @@ class GraphicsView(QGraphicsView):
                 item.edge.remove()
             elif hasattr(item, 'box'):
                 item.box.remove()
-
-
+        # store deleted stuff
+        self.grScene.scene.history.storeHistory("Delete selected")
 
     def getItemAtClick(self, event):
         """ return the object on which we've clicked/release mouse button """
@@ -200,6 +203,8 @@ class GraphicsView(QGraphicsView):
                 self.dragEdge.start_socket.setConnectedEdge(self.dragEdge)
                 self.dragEdge.end_socket.setConnectedEdge(self.dragEdge)
                 self.dragEdge.updatePositions()
+                # history
+                self.grScene.scene.history.storeHistory("Created new edge by dragging")
                 return True
 
         self.dragEdge.remove()
