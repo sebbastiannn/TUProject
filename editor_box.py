@@ -1,9 +1,12 @@
+from collections import OrderedDict
+from editor_class_collection import Serializable
 from editor_graphics_box import GraphicsBox
 from editor_content_widget import ContentWidget
 from editor_socket import *
 
-class Box():
+class Box(Serializable):
     def __init__(self, scene, title="Undefined Box", inputs=[], outputs=[]):
+        super().__init__()
         self.scene = scene
 
         self.title = title
@@ -76,6 +79,23 @@ class Box():
         self.grBox = None
         # remove node from the scene
         self.scene.removeBox(self)
-        # everything was done
+
+    def serialize(self):
+        inputs, outputs = [], []
+        for socket in self.inputs: inputs.append(socket.serialize())
+        for socket in self.outputs: outputs.append(socket.serialize())
+        return OrderedDict([
+            ('id', self.id),
+            ('title', self.title),
+            ('pos_x', self.grBox.scenePos().x()),
+            ('pos_y', self.grBox.scenePos().y()),
+            ('inputs', inputs),
+            ('outputs', outputs),
+            ('content', self.content.serialize()),
+        ])
+
+    def deserialize(self, data, hashmap={}):
+        return False
+
 
 

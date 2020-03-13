@@ -142,6 +142,10 @@ class GraphicsView(QGraphicsView):
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Delete:
             self.deleteSelected()
+        elif event.key() == Qt.Key_S and event.modifiers() & Qt.ControlModifier:
+            self.grScene.scene.saveToFile("graph.json.txt")
+        elif event.key() == Qt.Key_L and event.modifiers() & Qt.ControlModifier:
+            self.grScene.scene.loadFromFile("graph.json.txt")
         else:
             super().keyPressEvent(event)
 

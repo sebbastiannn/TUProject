@@ -1,7 +1,10 @@
+from collections import OrderedDict
+from editor_class_collection import Serializable
+
 from PyQt5.QtWidgets import *
 
 " Wird dann später mit einem Icon gefüllt"
-class ContentWidget(QWidget):
+class ContentWidget(QWidget, Serializable):
     def __init__(self, box, parent=None):
         # important to add because there will be a bug
         # when deleting the box
@@ -20,5 +23,12 @@ class ContentWidget(QWidget):
         self.layout.addWidget(self.wdg_label)
         self.layout.addWidget(QTextEdit("foo"))
 
+    def serialize(self):
+        return OrderedDict([
+
+        ])
+
+    def deserialize(self, data, hashmap={}):
+        return False
 
 

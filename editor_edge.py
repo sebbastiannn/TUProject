@@ -3,6 +3,8 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
+from collections import OrderedDict
+from editor_class_collection import Serializable
 from editor_socket import *
 
 
@@ -12,13 +14,14 @@ EDGE_TYPE_BEZIER = 2
 EDGE_CP_ROUNDNESS = 100
 
 
-class Edge:
+class Edge(Serializable):
     def __init__(self, scene, start_socket, end_socket, edge_type=EDGE_TYPE_DIRECT):
-
+        super().__init__()
         self.scene = scene
 
         self.start_socket = start_socket
         self.end_socket = end_socket
+        self.edge_type = edge_type
 
         self.start_socket.edge = self
         if self.end_socket is not None:
@@ -65,8 +68,16 @@ class Edge:
         except ValueError:
             pass
 
+    def serialize(self):
+        return OrderedDict([
+            ('id', self.id),
+            ('edge_type', self.edge_type),
+            ('start', self.start_socket.id),
+            ('end', self.end_socket.id),
+        ])
 
-
+    def deserialize(self, data, hashmap={}):
+        return False
 
 "Graphic from the edge"
 class GraphicsEdge(QGraphicsPathItem):

@@ -1,6 +1,8 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
+from collections import OrderedDict
+from editor_class_collection import Serializable
 
 LEFT_TOP = 1
 LEFT_BOTTOM = 2
@@ -11,9 +13,9 @@ LEFT_BOTTOM_Y = 6
 RIGHT_TOP_Y = 7
 RIGHT_BOTTOM_Y = 8
 
-class Socket():
+class Socket(Serializable):
     def __init__(self, box, index=0, position=LEFT_TOP, socket_type=1):
-
+        super().__init__()
         self.box = box
         self.index = index
         self.position = position
@@ -35,6 +37,17 @@ class Socket():
 
     def hasEdge(self):
         return self.edge is not None
+
+    def serialize(self):
+        return OrderedDict([
+            ('id', self.id),
+            ('index', self.index),
+            ('position', self.position),
+            ('socket_type', self.socket_type),
+        ])
+
+    def deserialize(self, data, hashmap={}):
+        return False
 
 
 class GraphicsSocket(QGraphicsItem):
