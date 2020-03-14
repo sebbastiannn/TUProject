@@ -49,7 +49,7 @@ class EditorWindow(QMainWindow):
 
         # status bar
         #self.statusBar().showMessage("")
-        self.status_mouse_pos = QLabel("")
+        #self.status_mouse_pos = QLabel("")
         #self.statusBar().addPermanentWidget(self.status_mouse_pos)
         #editor.view.scenePosChanged.connect(self.onScenePosChanged)
 

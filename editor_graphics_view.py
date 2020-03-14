@@ -13,6 +13,7 @@ EDGE_DRAG_START_THRESHOLD = 10
 DEBUG = True
 
 class GraphicsView(QGraphicsView):
+    # get the position (x,y) for each box etc / for deserialization
     scenePosChanged = pyqtSignal(int, int)
 
     def __init__(self, grScene, parent=None):
