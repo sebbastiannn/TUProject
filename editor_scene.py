@@ -47,10 +47,16 @@ class Scene(Serializable):
         self.edges.append(edge)
 
     def removeBox(self, box):
-        self.boxes.remove(box)
+        if box in self.boxes:
+            self.boxes.remove(box)
+        else:
+            print("!W:", "Scene::removeBox", "wanna remove box", box, "from self.boxes but it's not in the list!")
 
     def removeEdge(self, edge):
-        self.edges.remove(edge)
+        if edge in self.edges:
+            self.edges.remove(edge)
+        else:
+            print("!W:", "Scene::removeEdge", "wanna remove edge", edge, "from self.edges but it's not in the list!")
 
     def clear(self):
         while len(self.boxes) > 0:

@@ -131,7 +131,7 @@ class GraphicsView(QGraphicsView):
         item = self.getItemAtClick(event)
         if isinstance(item, GraphicsEdge): print('RMB:', item.edge, ' connecting sockets:',
                                                         item.edge.start_socket, '<-->', item.edge.end_socket)
-        if type(item) is GraphicsSocket: print('RMB:', item.socket, 'has edge:', item.socket.edge)
+        if type(item) is GraphicsSocket: print('RMB DEBUG:', item.socket, 'has edges:', item.socket.edges)
         if item is None:
             print('SCENE:')
             print('  Boxes:')
@@ -145,8 +145,8 @@ class GraphicsView(QGraphicsView):
     def mouseMoveEvent(self, event):
         if self.mode == MODE_EDGE_DRAG:
             pos = self.mapToScene(event.pos())
-            self.dragEdge.grEdge.setDestination(pos.x(), pos.y())
-            self.dragEdge.grEdge.update()
+            self.drag_edge.grEdge.setDestination(pos.x(), pos.y())
+            self.drag_edge.grEdge.update()
 
         self.last_scene_mouse_position = self.mapToScene(event.pos())
 
@@ -158,6 +158,9 @@ class GraphicsView(QGraphicsView):
 
     "Press event for delete"
     def keyPressEvent(self, event):
+        # Use this code below if you wanna have shortcuts in this widget.
+        # You want to use this, when you don't have a window which handles these shortcuts for you
+
         #if event.key() == Qt.Key_Delete:
             #self.deleteSelected()
         # S for Save
@@ -200,33 +203,36 @@ class GraphicsView(QGraphicsView):
         return obj
 
     def edgeDragStart(self, item):
-        self.previousEdge = item.socket.edge
-        self.last_start_socket = item.socket
-        self.dragEdge = Edge(self.grScene.scene, item.socket, None, EDGE_TYPE_BEZIER)
-
+        self.drag_start_socket = item.socket
+        self.drag_edge = Edge(self.grScene.scene, item.socket, None, EDGE_TYPE_BEZIER)
 
     def edgeDragEnd(self, item):
         """ return True if skip the rest of the code """
         self.mode = MODE_NOOP
+        # View::edgeDragEnd ~ End dragging edge
+        self.drag_edge.remove()
+        self.drag_edge = None
+
         if type(item) is GraphicsSocket:
-            if item.socket != self.last_start_socket:
-                if item.socket.hasEdge():
-                    item.socket.edge.remove()
-                if self.previousEdge is not None: self.previousEdge.remove()
-                self.dragEdge.start_socket = self.last_start_socket
-                self.dragEdge.end_socket = item.socket
-                self.dragEdge.start_socket.setConnectedEdge(self.dragEdge)
-                self.dragEdge.end_socket.setConnectedEdge(self.dragEdge)
-                self.dragEdge.updatePositions()
-                # history
-                self.grScene.scene.history.storeHistory("Created new edge by dragging")
-                return True
+            if item.socket != self.drag_start_socket:
+                if item.socket != self.drag_start_socket:
+                    # if we released dragging on a socket (other then the beginning socket)
 
-        self.dragEdge.remove()
-        self.dragEdge = None
+                    # we wanna keep all the edges comming from target socket
+                    if not item.socket.is_multi_edges:
+                        item.socket.removeAllEdges()
 
-        if self.previousEdge is not None:
-            self.previousEdge.start_socket.edge = self.previousEdge
+                    # we wanna keep all the edges comming from start socket
+                    if not self.drag_start_socket.is_multi_edges:
+                        self.drag_start_socket.removeAllEdges()
+
+                    new_edge = Edge(self.grScene.scene, self.drag_start_socket, item.socket, edge_type=EDGE_TYPE_BEZIER)
+                    #"View::edgeDragEnd ~  created new edge:", new_edge, "connecting",new_edge.start_socket, "<-->", new_edge.end_socket)
+                    # history
+                    self.grScene.scene.history.storeHistory("Created new edge by dragging")
+                    return True
+
+        # View::edgeDragEnd ~ everything done
         return False
 
 
