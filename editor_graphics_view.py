@@ -25,6 +25,7 @@ class GraphicsView(QGraphicsView):
         self.setScene(self.grScene)
 
         self.mode = MODE_NOOP
+        self.rubberBandDraggingRectangle = False
 
         "For zoom"
         self.zoomInFactor = 1.25
@@ -102,6 +103,10 @@ class GraphicsView(QGraphicsView):
             res = self.edgeDragEnd(item)
             if res: return
 
+        # without clicking on socket will crush the system
+        if item is None:
+            self.rubberBandDraggingRectangle = True
+
         super().mousePressEvent(event)
 
     def leftMouseButtonRelease(self, event):
@@ -114,8 +119,9 @@ class GraphicsView(QGraphicsView):
                 res = self.edgeDragEnd(item)
                 if res: return
 
-        if self.dragMode() == QGraphicsView.RubberBandDrag:
+        if self.rubberBandDraggingRectangle:
             self.grScene.scene.history.storeHistory("Selection changed")
+            self.rubberBandDraggingRectangle = False
 
         super().mouseReleaseEvent(event)
 
