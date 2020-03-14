@@ -49,7 +49,7 @@ class EditorWindow(QMainWindow):
 
         # status bar
         #self.statusBar().showMessage("")
-        #self.status_mouse_pos = QLabel("")
+        self.status_mouse_pos = QLabel("")
         #self.statusBar().addPermanentWidget(self.status_mouse_pos)
         #editor.view.scenePosChanged.connect(self.onScenePosChanged)
 
@@ -59,8 +59,8 @@ class EditorWindow(QMainWindow):
         self.show()
 
 
-    #def onScenePosChanged(self, x, y):
-        #self.status_mouse_pos.setText("Scene Pos: [%d, %d]" % (x, y))
+    def onScenePosChanged(self, x, y):
+        self.status_mouse_pos.setText("Scene Pos: [%d, %d]" % (x, y))
 
     def onFileNew(self):
         self.centralWidget().scene.clear()

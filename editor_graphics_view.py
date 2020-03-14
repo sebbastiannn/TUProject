@@ -13,7 +13,7 @@ EDGE_DRAG_START_THRESHOLD = 10
 DEBUG = True
 
 class GraphicsView(QGraphicsView):
-    #scenePosChanged = pyqtSignal(int, int)
+    scenePosChanged = pyqtSignal(int, int)
 
     def __init__(self, grScene, parent=None):
         super().__init__(parent)
@@ -141,11 +141,11 @@ class GraphicsView(QGraphicsView):
             self.dragEdge.grEdge.setDestination(pos.x(), pos.y())
             self.dragEdge.grEdge.update()
 
-        #self.last_scene_mouse_position = self.mapToScene(event.pos())
+        self.last_scene_mouse_position = self.mapToScene(event.pos())
 
-        #self.scenePosChanged.emit(
-            #int(self.last_scene_mouse_position.x()), int(self.last_scene_mouse_position.y())
-        #)
+        self.scenePosChanged.emit(
+            int(self.last_scene_mouse_position.x()), int(self.last_scene_mouse_position.y())
+        )
 
         super().mouseMoveEvent(event)
 
