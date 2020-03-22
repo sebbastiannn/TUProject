@@ -2,18 +2,17 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 
-from editor_scene import Scene
-from editor_box import Box
-from editor_edge import *
-from editor_graphics_view import GraphicsView
+from scene import Scene
+from box import Box
+from edge import *
+from graphics_view import GraphicsView
 
 
-class EditorMainWidget(QWidget):
+class MainWidget(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self.stylesheet_filename = 'qss/nodestyle.qss'
-        self.loadStylesheet(self.stylesheet_filename)
+        self.filename = None
 
         self.initUI()
 
@@ -43,10 +42,3 @@ class EditorMainWidget(QWidget):
 
         edge1 = Edge(self.scene, box1.outputs[0], box2.inputs[0], edge_type=EDGE_TYPE_BEZIER)
         edge2 = Edge(self.scene, box2.outputs[0], box3.inputs[0], edge_type=EDGE_TYPE_BEZIER)
-
-    def loadStylesheet(self, filename):
-        print('STYLE loading:', filename)
-        file = QFile(filename)
-        file.open(QFile.ReadOnly | QFile.Text)
-        stylesheet = file.readAll()
-        QApplication.instance().setStyleSheet(str(stylesheet, encoding='utf-8'))

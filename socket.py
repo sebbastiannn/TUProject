@@ -2,7 +2,7 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from collections import OrderedDict
-from editor_class_collection import Serializable
+from class_collection import Serializable
 
 LEFT_TOP = 1
 LEFT_BOTTOM = 2

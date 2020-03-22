@@ -1,8 +1,8 @@
 from collections import OrderedDict
-from editor_class_collection import Serializable
-from editor_graphics_box import GraphicsBox
-from editor_content_widget import ContentWidget
-from editor_socket import *
+from class_collection import Serializable
+from graphics_box import GraphicsBox
+from content_widget import ContentWidget
+from socket import *
 
 class Box(Serializable):
     def __init__(self, scene, title="Undefined Box", inputs=[], outputs=[]):

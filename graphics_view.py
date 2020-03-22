@@ -2,8 +2,8 @@ from PyQt5.QtWidgets import QGraphicsView
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
-from editor_socket import GraphicsSocket
-from editor_edge import *                   #Edge, EDGE_TYPE_BEZIER
+from socket import GraphicsSocket
+from edge import *                   #Edge, EDGE_TYPE_BEZIER
 
 MODE_NOOP = 1
 MODE_EDGE_DRAG = 2

@@ -1,5 +1,5 @@
 from collections import OrderedDict
-from editor_class_collection import Serializable
+from class_collection import Serializable
 
 from PyQt5.QtWidgets import *
 

@@ -4,8 +4,8 @@ from PyQt5.QtCore import *
 from PyQt5.QtGui import *
 
 from collections import OrderedDict
-from editor_class_collection import Serializable
-from editor_socket import *
+from class_collection import Serializable
+from socket import *
 
 
 EDGE_TYPE_DIRECT = 1

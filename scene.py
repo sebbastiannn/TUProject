@@ -15,10 +15,10 @@ from PyQt5.QtGui import *
 "or even custom items, on a 2D surface. QGraphicsScene is part of the Graphics View Framework"
 import json
 from collections import OrderedDict
-from editor_class_collection import Serializable, SceneHistory, SceneClipboard
-from editor_graphics_scene import GraphicsScene
-from editor_box import Box
-from editor_edge import Edge
+from class_collection import Serializable, SceneHistory, SceneClipboard
+from graphics_scene import GraphicsScene
+from box import Box
+from edge import Edge
 
 
 "Content from Scene"
@@ -35,6 +35,8 @@ class Scene(Serializable):
         self.initUI()
         self.history = SceneHistory(self)
         self.clipboard = SceneClipboard(self)
+    "For changing stuff"
+
 
     def initUI(self):
         self.grScene = GraphicsScene(self)
