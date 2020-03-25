@@ -19,7 +19,6 @@ class GraphicsBox(QGraphicsItem):
         self.title_height = 24.0
         self._padding = 4.0
 
-
         self._pen_default = QPen(QColor("#7F000000"))
         self._pen_selected = QPen(QColor("#FFFFA637"))
 
@@ -30,30 +29,10 @@ class GraphicsBox(QGraphicsItem):
         self.initTitle()
         self.title = self.box.title
 
-        # init sockets
-        self.initSockets()
-
         # init content
         self.initContent()
 
         self.initUI()
-        self.wasMoved = False
-
-    "update the edges"
-    def mouseMoveEvent(self, event):
-        super().mouseMoveEvent(event)
-        # optimize me! just update the selected nodes
-        for box in self.scene().scene.boxes:
-            if box.grBox.isSelected():
-                box.updateConnectedEdges()
-        self.wasMoved = True
-
-    def mouseReleaseEvent(self, event):
-        super().mouseReleaseEvent(event)
-
-        if self.wasMoved:
-            self.wasMoved = False
-            self.box.scene.history.storeHistory("Box moved")
 
     @property
     def title(self): return self._title
@@ -64,7 +43,6 @@ class GraphicsBox(QGraphicsItem):
         self.title_item.setPlainText(self._title)
         text_width = self.title_item.boundingRect().width() # set the width of the title
         offset = self.width // 2 - text_width // 2  # double // to get a number without comma number
-        #print("OFFSET:", offset)
         self.title_item.setPos( offset - self.title_horizontal_padding // 2, 0)
 
     def boundingRect(self):
@@ -93,9 +71,6 @@ class GraphicsBox(QGraphicsItem):
                                  self.width - 2 * self.edge_size, self.height - 2 * self.edge_size - self.title_height)
         self.grContent.setWidget(self.content)
 
-    def initSockets(self):
-        pass
-
     def paint(self, painter, QStyleOptionGraphicsItem, widget=None):
         # title
         path_title = QPainterPath()
@@ -123,6 +98,3 @@ class GraphicsBox(QGraphicsItem):
         painter.setPen(self._pen_default if not self.isSelected() else self._pen_selected)
         painter.setBrush(Qt.NoBrush)
         painter.drawPath(path_outline.simplified())
-
-
-

@@ -10,8 +10,6 @@ class Box(Serializable):
         self._title = title
         self.scene = scene
 
-
-
         self.content = ContentWidget(self)
         self.grBox = GraphicsBox(self)
         self.title = title

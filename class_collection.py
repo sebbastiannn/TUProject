@@ -115,9 +115,12 @@ class SceneHistory():
     def __init__(self, scene):
         self.scene = scene
 
+        self.clear()
+        self.history_limit = 32
+
+    def clear(self):
         self.history_stack = []
         self.history_current_step = -1
-        self.history_limit = 32
 
     def undo(self):
         if self.history_current_step > 0:

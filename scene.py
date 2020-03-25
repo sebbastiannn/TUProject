@@ -13,13 +13,17 @@ from PyQt5.QtGui import *
 "The class serves as a container for QGraphicsItems."
 "It is used together with QGraphicsView for visualizing graphical items, such as lines, rectangles, text, " \
 "or even custom items, on a 2D surface. QGraphicsScene is part of the Graphics View Framework"
+import os
 import json
 from collections import OrderedDict
+from class_collection import dumpException
 from class_collection import Serializable, SceneHistory, SceneClipboard
 from graphics_scene import GraphicsScene
 from box import Box
 from edge import Edge
 
+
+class InvalidFile(Exception): pass
 
 "Content from Scene"
 class Scene(Serializable):

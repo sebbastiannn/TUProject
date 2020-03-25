@@ -10,6 +10,7 @@ from main_widget import MainWidget
 from box import Box
 from scene import Scene
 
+import pdb
 
 
 class Window(QMainWindow):
@@ -17,7 +18,7 @@ class Window(QMainWindow):
         super().__init__()
 
         self.initUI()
-
+        # create node editor widget
         self.name_company = 'TU Berlin'
         self.name_product = 'Editor'
 
@@ -32,13 +33,11 @@ class Window(QMainWindow):
         self.createActions()
         self.createMenus()
         self.createToolBars()
-        self.updateMenus()
+        #self.updateMenus()
 
         self.readSettings()
-        #self.setWindowTitle("Editor")
         # create node editor widget
         self.editor = MainWidget(self)
-        #self.editor.scene.addHasBeenModifiedListener(self.changeTitle)
         self.setCentralWidget(self.editor)
 
         # status bar
@@ -48,33 +47,6 @@ class Window(QMainWindow):
         self.setGeometry(200, 200, 800, 600)
         self.setWindowTitle("Editor")
         self.show()
-
-        # initialize toolbar
-
-        # toolbar = QToolBar("my main toolbar")
-        # toolbar.setIconSize(QSize(16,16))
-        # self.addToolBar(toolbar)
-        "first button"
-        # button_action = QAction(QIcon("addBox.png"), "New box", self)
-        # button_action.setStatusTip("Add a new Box")
-        # button_action.triggered.connect(self.addnewBox())
-        # button_action.setCheckable(True) bleibt aktiviert
-        # toolbar.addAction(button_action)
-
-        # toolbar.addSeparator()
-
-        # button_action = QAction(QIcon("addBox.png"), "Your button2", self)
-        # button_action.setStatusTip("This is your button")
-        # button_action.triggered.connect(self.onMyToolBarButtonClick)
-        # button_action.setCheckable(True) bleibt aktiviert
-        # toolbar.addAction(button_action)
-
-        # toolbar.addWidget(QLabel("Hello"))
-        # toolbar.addWidget(QCheckBox())
-
-    #def addnewBox(self):
-        #box = Box(self.scene, "Box", inputs=[0, 0, 0], outputs=[1])
-        #box.setPos(0, 0)
 
     #def createStatusBar(self):
         # self.statusBar().showMessage("")
@@ -122,10 +94,37 @@ class Window(QMainWindow):
         pass
 
     def createToolBars(self):
-        pass
+        # initialize toolbar
+        toolbar = QToolBar("my main toolbar")
+        toolbar.setIconSize(QSize(32, 32))
+        self.addToolBar(toolbar)
+        "buttons"
 
-    def onMyToolBarButtonClick(self, s):
-        print("click", s)
+        button_action = QAction(QIcon("2xaddBox.png"), "New box 1", toolbar)
+        button_action.setStatusTip("Add a new Box")
+        #pdb.set_trace()
+        button_action.triggered.connect(self.scene.addBox())
+        #button_action.triggered.connect(self.onMyToolBarButtonClick)
+        toolbar.addAction(button_action)
+
+        toolbar.addSeparator()
+
+        # button_action = QAction(QIcon("addBox.png"), "Your button2", self)
+        # button_action.setStatusTip("This is your button")
+        # button_action.triggered.connect(self.onMyToolBarButtonClick)
+        # button_action.setCheckable(True)
+        # toolbar.addAction(button_action)
+
+        # toolbar.addWidget(QLabel("Hello"))
+        # toolbar.addWidget(QCheckBox())
+
+    def addnewBox(self):
+        box = Box(self.scene, "Box", inputs=[0, 0, 0], outputs=[1])
+        box.setPos(0, 0)
+        print("click")
+
+    def onMyToolBarButtonClick(self):
+        print("click")
 
 
     def onScenePosChanged(self, x, y):
