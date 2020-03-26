@@ -3,13 +3,13 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 
 from tests.testtoolbar.editor_main_widget import MainWidget
-from tests.testtoolbar.editor_box import Box
 from tests.testtoolbar.editor_scene import Scene
+from tests.testtoolbar.editor_box import Box
+
 
 class Window(QMainWindow):
     def __init__(self):
         super().__init__()
-
         self.initUI()
 
     def initUI(self):
@@ -35,9 +35,12 @@ class Window(QMainWindow):
         "buttons"
         button_action = QAction(QIcon("addBox.png"), "New box 1", self)
         button_action.setStatusTip("Add a new Box")
-        #button_action.triggered.connect(self.scene.addnewBox())
+        button_action.triggered.connect(self.addNewBox)
         toolbar.addAction(button_action)
 
-    def addnewBox(self):
-        box = Box(self.scene, "Box")
+    def addNewBox(self):
+        print("addnewbox called")
+        box = Box(self.scene, "Box 1")
         box.setPos(0, 0)
+
+

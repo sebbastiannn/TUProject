@@ -27,7 +27,8 @@ class MainWidget(QWidget):
     def addBoxes(self):
         box1 = Box(self.scene, "Box 1")
         box2 = Box(self.scene, "Box 2")
-        box3 = Box(self.scene, "Box 3")
+        box3 = Box(self.scene, "Box3 ")
         box1.setPos(-350, -250)
         box2.setPos(-75, 0)
         box3.setPos(200, -150)
+

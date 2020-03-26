@@ -103,7 +103,7 @@ class Window(QMainWindow):
         button_action = QAction(QIcon("2xaddBox.png"), "New box 1", toolbar)
         button_action.setStatusTip("Add a new Box")
         #pdb.set_trace()
-        button_action.triggered.connect(self.scene.addBox())
+        # button_action.triggered.connect(self.scene.addBox())
         #button_action.triggered.connect(self.onMyToolBarButtonClick)
         toolbar.addAction(button_action)
 
@@ -111,7 +111,8 @@ class Window(QMainWindow):
 
         # button_action = QAction(QIcon("addBox.png"), "Your button2", self)
         # button_action.setStatusTip("This is your button")
-        # button_action.triggered.connect(self.onMyToolBarButtonClick)
+        # button_action.triggered.connect(self.onMyToolBarButt
+        # onClick)
         # button_action.setCheckable(True)
         # toolbar.addAction(button_action)
 
