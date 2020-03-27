@@ -87,11 +87,7 @@ class GraphicsView(QGraphicsView, QWidget):
             else:
                 print("double click")
                 self.box_Attribut = BoxAttributes()
-
-
-
         super().mouseReleaseEvent(event)
-
 
     "RIGHT MOUSE BUTTON EVENT"
     def rightMouseButtonPress(self, event):
