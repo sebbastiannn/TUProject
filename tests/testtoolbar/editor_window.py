@@ -33,14 +33,14 @@ class Window(QMainWindow):
         toolbar.setIconSize(QSize(32, 32))
         self.addToolBar(toolbar)
         "buttons"
-        button_action = QAction(QIcon("addBox.png"), "New box 1", self)
+        button_action = QAction(QIcon("addBox.png"), "New box", self)
         button_action.setStatusTip("Add a new Box")
         button_action.triggered.connect(self.addNewBox)
         toolbar.addAction(button_action)
 
     def addNewBox(self):
         print("addnewbox called")
-        box = Box(self.scene, "Box 1")
+        box = Box(self.scene, "Box")
         box.setPos(0, 0)
 
 
