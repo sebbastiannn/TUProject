@@ -1,20 +1,21 @@
-from tests.testtoolbar.editor_graphics_box import GraphicsBox
-
-
+from tests.testattribute.editor_graphics_box import GraphicsBox
 
 class Box():
     def __init__(self, scene, title="Undefined Box"):
         super().__init__()
         self._title = title
         self.scene = scene
-
-
         self.grBox = GraphicsBox(self)
         self.title = title
-        # eigenschaften hinzufügen hier
-        self.capacity = 42
+
         self.scene.addBox(self)
         self.scene.grScene.addItem(self.grBox)
+
+        "Box characteristics"
+        self.test_variable_1 = 42
+        self.test_variable_2 = 4
+        self.test_variable_3 = 90.4
+        self.test_variable_4 = 5.98
 
     # The grBox know the Box Position
     @property

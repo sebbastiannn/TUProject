@@ -1,9 +1,8 @@
 from PyQt5.QtWidgets import *
 
-
-from tests.testtoolbar.editor_scene import Scene
-from tests.testtoolbar.editor_box import Box
-from tests.testtoolbar.editor_graphics_view import GraphicsView
+from tests.testattribute.editor_scene import Scene
+from tests.testattribute.editor_box import Box
+from tests.testattribute.editor_graphics_view import GraphicsView
 
 
 class MainWidget(QWidget):
@@ -14,7 +13,6 @@ class MainWidget(QWidget):
     def initUI(self):
 
         self.layout = QVBoxLayout()
-        self.layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self.layout)
 
         # crate graphics scene
@@ -27,8 +25,7 @@ class MainWidget(QWidget):
     def addBoxes(self):
         box1 = Box(self.scene, "Box 1")
         box2 = Box(self.scene, "Box 2")
-        box3 = Box(self.scene, "Box 3 ")
         box1.setPos(-350, -250)
         box2.setPos(-75, 0)
-        box3.setPos(200, -150)
+
 
